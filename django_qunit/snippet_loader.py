@@ -23,11 +23,13 @@ for app in settings.INSTALLED_APPS:
         mod = import_module(app)
     except ImportError as e:
         raise ImproperlyConfigured('ImportError %s: %s' % (app, e.args[0]))
-    template_dir = os.path.join(os.path.dirname(mod.__file__), "static", settings.QUNIT_TEST_PATH)
+    template_dir = os.path.join(
+        os.path.dirname(mod.__file__), "static", settings.QUNIT_TEST_PATH)
     if os.path.isdir(template_dir):
         if not six.PY3:
             template_dir = template_dir.decode(fs_encoding)
         app_template_dirs.append(template_dir)
+
 
 class Loader(AppLoader):
     def get_template_sources(self, template_name, template_dirs=None):
@@ -40,7 +42,8 @@ class Loader(AppLoader):
             try:
                 yield safe_join(template_dir, template_name)
             except UnicodeDecodeError:
-                # The template dir name was a bytestring that wasn't valid UTF-8.
+                # The template dir name was a bytestring that wasn't valid
+                # UTF-8.
                 raise
             except ValueError:
                 # The joined path was located outside of template_dir.
