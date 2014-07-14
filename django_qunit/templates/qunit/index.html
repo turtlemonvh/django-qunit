@@ -28,7 +28,7 @@
     {% if in_subdirectory %}
       <li><a href="{% url "qunit_test_overview" previous_directory %}">..</a></li>
     {% endif %}
-    
+
     {% for suite in subsuites %}
       <li><a href="{{ suite.link_name }}/">{{ suite.pretty_name }}</a></li>
     {% endfor %}
